@@ -38,7 +38,8 @@ void NodeManager::Init(const YAML::Node& default_config)
   YAML::Node lidar_config = YamlSubNodeAbort(config, "lidar");
   for (uint8_t i = 0; i < lidar_config.size(); ++i)
   {
-    // TODO: uncommenting this seems to cause the node to crash
+    // TODO: uncommenting causes the node to crash likely due to conflicting
+    // names
     // std::shared_ptr<SourceDriver> source;
     // source = std::make_shared<SourceDriver>(SourceType::DATA_FROM_LIDAR);
     source->Init(lidar_config[i]);
