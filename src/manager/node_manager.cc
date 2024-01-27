@@ -31,11 +31,16 @@
 #include "manager/node_manager.h"
 void NodeManager::Init(const YAML::Node& config)
 {
+  std::shared_ptr<SourceDriver> source;
+  source = std::make_shared<SourceDriver>(SourceType::DATA_FROM_LIDAR);
+  std::string config_path = source->node_ptr_->declare_parameter<std::string>("config_path", "");
+  YAML::Node config{config_path.empty() ? default_config : YAML::LoadFile(config_path)};
   YAML::Node lidar_config = YamlSubNodeAbort(config, "lidar");
   for (uint8_t i = 0; i < lidar_config.size(); ++i)
   {
-    std::shared_ptr<SourceDriver> source;
-    source = std::make_shared<SourceDriver>(SourceType::DATA_FROM_LIDAR);
+    // TODO: uncommenting this seems to cause the node to crash
+    // std::shared_ptr<SourceDriver> source;
+    // source = std::make_shared<SourceDriver>(SourceType::DATA_FROM_LIDAR);
     source->Init(lidar_config[i]);
     sources_driver_.emplace_back(source);
   }

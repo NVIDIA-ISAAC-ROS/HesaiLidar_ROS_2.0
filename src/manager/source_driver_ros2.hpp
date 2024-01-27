@@ -55,7 +55,7 @@ public:
   // Stop working
   virtual void Stop();
   virtual ~SourceDriver();
-  SourceDriver(SourceType src_type) {};
+  SourceDriver(SourceType src_type) { node_ptr_.reset(new rclcpp::Node("hesai_ros_driver_node")); };
   void SpinRos2(){rclcpp::spin(this->node_ptr_);}
   std::shared_ptr<rclcpp::Node> node_ptr_;
 protected:
@@ -120,7 +120,6 @@ inline void SourceDriver::Init(const YAML::Node& config)
   std::string ros_send_point_topic;
   YamlRead<std::string>(config["ros"], "ros_send_point_cloud_topic", ros_send_point_topic, "hesai_points");
 
-  node_ptr_.reset(new rclcpp::Node("hesai_ros_driver_node"));
   if (send_point_cloud_ros) {
     std::string ros_send_point_topic;
     YamlRead<std::string>(config["ros"], "ros_send_point_cloud_topic", ros_send_point_topic, "hesai_points");
