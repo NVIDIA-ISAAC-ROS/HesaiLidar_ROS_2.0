@@ -33,6 +33,7 @@
 
 #include <iostream>
 #include "Version.h"
+#include <getopt.h>
 
 #ifdef ROS_FOUND
 #include <ros/ros.h>
@@ -75,7 +76,22 @@ int main(int argc, char** argv)
    config_path = (std::string)PROJECT_PATH;
 #endif
 
-   config_path += "/config/config.yaml";
+  config_path += "/config/config.yaml";
+  struct option longopts[] = {
+        {"config", optional_argument, NULL, 'c'}
+  };
+  int option_index = 0;
+  int opt;
+  opterr = 0;
+  while ((opt = getopt_long(argc, argv, "c:", longopts, nullptr)) != -1) {
+    switch (opt) {
+      case 'c':
+        config_path = std::string(optarg);
+        break;
+      default:
+        break;
+    }
+  }
 
 #ifdef ROS_FOUND
   ros::NodeHandle priv_hh("~");
