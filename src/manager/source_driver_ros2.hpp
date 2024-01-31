@@ -120,7 +120,7 @@ inline void SourceDriver::Init(const YAML::Node& config)
   std::string ros_send_point_topic;
   YamlRead<std::string>(config["ros"], "ros_send_point_cloud_topic", ros_send_point_topic, "hesai_points");
 
-  // extra exposure from sdk related
+  // sdk related extensions
   std::string save_correction_path;
   YamlRead<std::string>(config["sdk"], "save_correction_path", save_correction_path, "");
 
@@ -161,7 +161,6 @@ inline void SourceDriver::Init(const YAML::Node& config)
   {
     exit(-1);
   }
-  // save intrinsics
   if (!save_correction_path.empty()) {
     driver_ptr_->lidar_ptr_->SaveCorrectionFile(save_correction_path);
   }
