@@ -120,6 +120,10 @@ inline void SourceDriver::Init(const YAML::Node& config)
   std::string ros_send_point_topic;
   YamlRead<std::string>(config["ros"], "ros_send_point_cloud_topic", ros_send_point_topic, "hesai_points");
 
+  // extra exposure from sdk related
+  std::string save_correction_path;
+  YamlRead<std::string>(config["sdk"], "save_correction_path", save_correction_path, "");
+
   node_ptr_.reset(new rclcpp::Node("hesai_ros_driver_node"));
   if (send_point_cloud_ros) {
     std::string ros_send_point_topic;
@@ -156,6 +160,10 @@ inline void SourceDriver::Init(const YAML::Node& config)
   if (!driver_ptr_->Init(driver_param))
   {
     exit(-1);
+  }
+  // save intrinsics
+  if (!save_correction_path.empty()) {
+    driver_ptr_->lidar_ptr_->SaveCorrectionFile(save_correction_path);
   }
 }
 
