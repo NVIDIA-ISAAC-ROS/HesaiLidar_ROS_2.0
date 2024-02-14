@@ -25,4 +25,4 @@ lidar:
       send_packet_ros: true                          #true: Send packets through ROS 
       send_point_cloud_ros: true                     #true: Send point cloud through ROS
     sdk:
-      save_correction_path: ""          # path to save correction file from lidar, will not save if empty  
+      save_correction_path: "/tmp/hesai/correction.csv"          # path to save correction file from lidar, will not save if empty  
