@@ -39,6 +39,7 @@
 #include <chrono>
 #include <string>
 #include <functional>
+#include <filesystem>
 #ifdef __CUDACC__
   #include "hesai_lidar_sdk_gpu.cuh"
 #else
@@ -122,7 +123,7 @@ inline void SourceDriver::Init(const YAML::Node& config)
 
   // sdk related extensions
   std::string save_correction_path;
-  YamlRead<std::string>(config["sdk"], "save_correction_path", save_correction_path, "");
+  YamlRead<std::string>(config["sdk"], "save_correction_path", save_correction_path, "/tmp/hesai/correction.csv");
 
   node_ptr_.reset(new rclcpp::Node("hesai_ros_driver_node"));
   if (send_point_cloud_ros) {
@@ -162,6 +163,9 @@ inline void SourceDriver::Init(const YAML::Node& config)
     exit(-1);
   }
   if (!save_correction_path.empty()) {
+    std::filesystem::path file_path = save_correction_path;
+    std::filesystem::path dir_path = file_path.parent_path();
+    std::filesystem::create_directory(dir_path);
     driver_ptr_->lidar_ptr_->SaveCorrectionFile(save_correction_path);
   }
 }
