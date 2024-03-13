@@ -78,7 +78,8 @@ int main(int argc, char** argv)
 
   config_path += "/config/config.yaml";
   struct option longopts[] = {
-        {"config", optional_argument, NULL, 'c'}
+        {"config", optional_argument, NULL, 'c'},
+        {0,0,0,0}
   };
   int opt;
   while ((opt = getopt_long(argc, argv, "c:", longopts, nullptr)) != -1) {
