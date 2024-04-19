@@ -263,6 +263,17 @@ if($ENV{ROS_VERSION} MATCHES "2")
     DESTINATION lib)
 
   install(DIRECTORY
+    src/driver/HesaiLidar_SDK_2.0/libhesai/Source/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/Container/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/UdpParser/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/UdpParserGpu/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/PtcClient/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/PtcParser/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/Logger/include
+    src/driver/HesaiLidar_SDK_2.0/libhesai/include
+    DESTINATION include/${PROJECT_NAME})
+
+  install(DIRECTORY
     launch
     rviz
     DESTINATION share/${PROJECT_NAME})
