@@ -82,6 +82,7 @@ int main(int argc, char** argv)
         {0,0,0,0}
   };
   int opt;
+  opterr = 0;
   while ((opt = getopt_long(argc, argv, "c:", longopts, nullptr)) != -1) {
     switch (opt) {
       case 'c':

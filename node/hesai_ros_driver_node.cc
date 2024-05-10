@@ -81,7 +81,6 @@ int main(int argc, char** argv)
         {"config", optional_argument, NULL, 'c'},
         {0,0,0,0}
   };
-  int option_index = 0;
   int opt;
   opterr = 0;
   while ((opt = getopt_long(argc, argv, "c:", longopts, nullptr)) != -1) {
