@@ -162,7 +162,7 @@ inline void SourceDriver::Init(const YAML::Node& config)
   {
     exit(-1);
   }
-  if (!save_correction_path.empty()) {
+  if (driver_param.input_param.source_type == DATA_FROM_LIDAR && !save_correction_path.empty()) {
     std::filesystem::path file_path = save_correction_path;
     std::filesystem::path dir_path = file_path.parent_path();
     std::filesystem::create_directory(dir_path);
