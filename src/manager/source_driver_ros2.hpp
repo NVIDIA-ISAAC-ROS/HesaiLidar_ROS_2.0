@@ -126,6 +126,8 @@ inline void SourceDriver::Init(const YAML::Node& config)
   YamlRead<std::string>(config["sdk"], "save_correction_path", save_correction_path, "/tmp/hesai/correction.csv");
 
   node_ptr_.reset(new rclcpp::Node("hesai_ros_driver_node"));
+  subscription_spin_thread_ = new boost::thread(boost::bind(&SourceDriver::SpinRos2,this));
+
   if (send_point_cloud_ros) {
     std::string ros_send_point_topic;
     YamlRead<std::string>(config["ros"], "ros_send_point_cloud_topic", ros_send_point_topic, "hesai_points");
@@ -144,7 +146,6 @@ inline void SourceDriver::Init(const YAML::Node& config)
     pkt_sub_ = node_ptr_->create_subscription<hesai_ros_driver::msg::UdpFrame>(ros_recv_packet_topic, 10, 
       std::bind(&SourceDriver::RecievePacket, this, std::placeholders::_1));
     driver_param.decoder_param.enable_udp_thread = false;
-    subscription_spin_thread_ = new boost::thread(boost::bind(&SourceDriver::SpinRos2,this));
   }
   #ifdef __CUDACC__
     driver_ptr_.reset(new HesaiLidarSdkGpu<LidarPointXYZIRT>());
